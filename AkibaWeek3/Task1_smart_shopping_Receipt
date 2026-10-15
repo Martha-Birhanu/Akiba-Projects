@@ -1,0 +1,61 @@
+n = int(input("How many products do you want to enter? "))
+items=[]
+
+for i in range(n):
+    name = input(" enter name of product: ")
+    price=float(input("enter the product price: "))
+    quantity=int(input("enter the quantity: "))
+
+    if price < 0 or quantity < 0:
+        print(" Invalid Input! price and quantity must be non-negative")
+        continue 
+    items.append({"name":name, "price":price, "quantity":quantity})
+
+
+#subtotal function
+def calculate_subtotal(items):
+    subtotal=0
+    for item in items:
+        subtotal+= item["price"] *item["quantity"]
+    return subtotal
+
+
+#Discount function
+def calculate_discount(value):
+
+    if value<1000:
+        return 0
+    elif  value < 3000:
+        return  0.05*value
+    else:
+        return 0.1*value
+
+#Tax Function
+
+def calculate_tax(amount, tax_rate):
+    if 0 < tax_rate < 1:
+        tax=amount * tax_rate
+        return tax
+    else:
+        print("Invalid tax rate! Must be between 0 and 1.")
+        return 0
+
+
+#Receipt generator
+def generate_receipt(items, tax_rate):
+    subtotal = calculate_subtotal(items)
+    discount = calculate_discount(subtotal)
+    discounted_total = subtotal - discount
+    tax = calculate_tax(discounted_total, tax_rate)
+    final_total = discounted_total + tax
+
+
+    print(f"----------------------------\nshopping Receipt\n----------------------------")
+    print("Subtotal:", subtotal)
+    print("Discount:", discount)
+    print("Tax:", tax)
+    print("Final Amount:", final_total)
+
+
+tax_rate=float(input("Enter tax rate( eg. 0.1 for 10%): "))
+generate_receipt(items,tax_rate)
