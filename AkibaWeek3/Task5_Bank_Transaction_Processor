@@ -1,0 +1,74 @@
+Balance =1000
+transactions=[]
+daily_withdrawal_limit=2500
+Totalwithdraw=0
+
+
+
+def RecordTransaction(transaction_type, amount, balance_after):
+    transactions.append({
+        "type": transaction_type,
+        "amount": amount,
+        "balance_after": balance_after
+    })
+        
+
+ 
+def Deposit_Money():
+    global Balance
+
+    deposit=int(input("Enter the Amount of money to deposit: "))
+    if deposit<=0:
+        return "Enter amount which is either not negative or zero. "
+    Balance+=deposit
+    RecordTransaction("deposit", deposit, Balance)
+    return deposit,Balance
+
+
+def Withdraw_money():
+    global Balance, Totalwithdraw
+    withdraw=int(input("Enter the amount you want to withdraw: "))
+    if withdraw <=0:
+        return "enter amount greater than 0"
+    elif withdraw > Balance:
+        return " Insufficient Funds"
+    elif  withdraw + Totalwithdraw > daily_withdrawal_limit:
+        return f"Daily withdraw limit is {daily_withdrawal_limit}"
+    
+    Balance -= withdraw
+    
+    Totalwithdraw+=withdraw
+    RecordTransaction("withdrawal", withdraw, Balance)
+    return withdraw, Balance
+
+
+def Transaction_Summary():
+    return {
+        "transactions": transactions
+    }
+
+
+
+
+def ChooseOptions():
+    while True:
+        print(f"1. Deposit Money \n2. Withdraw Money   \n3. Check Current Balance  \n4. Transaction History \n5. Exit")
+        option=input("Choose Option: ")
+
+        if option == "1":
+            print(Deposit_Money( ))
+        elif option == "2":
+            print(Withdraw_money())     
+        elif option == "3":
+            print(f" Current Balance is: {Balance}")  
+        elif option == "4":
+            print(Transaction_Summary())     
+        elif option == "5":
+            break
+        else :
+            print("enter valid option!")
+
+
+
+
+print(ChooseOptions())
