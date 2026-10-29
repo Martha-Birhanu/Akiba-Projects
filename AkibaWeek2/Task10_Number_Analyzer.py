@@ -3,8 +3,8 @@ lst=[]
 num_of_evens=0
 num_of_odds=0
 total_sum=0
-for i in range(0,10):
-    num=int(input("Enter number: "))
+for i in range(1,11):
+    num=int(input(f"Enter number {i}: "))
     lst.append(num)
     total_sum += num
     if num % 2==0:
